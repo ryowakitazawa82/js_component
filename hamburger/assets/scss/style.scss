@@ -24,6 +24,10 @@ body {
     cursor: pointer;
   }
 
+  .sp-menu #open.hide {
+      display: none;
+  }
+
   main {
     padding: 0 16px;
   }
@@ -41,6 +45,15 @@ body {
     // オーバーレイ要素を透明に
     pointer-events: none;
     // ポインターアクションをしないように
+    transition: opacity .6s;
+    // ふわっと表示
+  }
+
+  // showクラスを追加したら表示されるように
+  .overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    //   ポインターアクションを発生するように
   }
 
   .overlay #close {
