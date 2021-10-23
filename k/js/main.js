@@ -5,6 +5,7 @@
      const prev = document.getElementById('prev');
      const ul = document.querySelector('ul');
      const slides = ul.children;
+     const dots = [];
      let currentIndex = 0;
     //  計算のために、一旦全てのスライドを取得
     // currentIndexをまずは初期化
@@ -20,15 +21,32 @@
             next.classList.add('hidden');
         }
     }
+    function moveSlides() {
+        const slideWidth = slides[0].getBoundingClientRect().width;
+        ul.style.transform = `translateX(${-1 * slideWidth * currentIndex}px)`;
+    }
+    // 重複している処理を関数でまとめる
+
+    function setupDots() {
+        for(let i = 0; i < slides.length; i++){
+            const button = document.createElement('button');
+            dots.push(button);
+            document.querySelector('nav').appendChild(button);
+        }
+
+        dots[0].classList.add('current');
+    }
 
     updateButtons();
     // 最初に currentIndex が 0 の時に prev を消しておきたいため、ページを読み込んだ直後に実行。
+    setupDots();
 
      next.addEventListener('click',() => {
         currentIndex++;
         updateButtons();
-         const slideWidth = slides[0].getBoundingClientRect().width;
-         ul.style.transform = `translateX(${-1 * slideWidth * currentIndex}px)`;
+        // const slideWidth = slides[0].getBoundingClientRect().width;
+        // ul.style.transform = `translateX(${-1 * slideWidth * currentIndex}px)`;
+        moveSlides();
         });
         //  スライド1枚分の幅を計算するために、まずはslideWidthで定数を宣言。
         //  スライドの幅はすべて同じなため、最初のスライド（slides[0])を取得。
@@ -42,7 +60,8 @@
         prev.addEventListener('click',() => {
             currentIndex--;
             updateButtons();
-             const slideWidth = slides[0].getBoundingClientRect().width;
-             ul.style.transform = `translateX(${-1 * slideWidth * currentIndex}px)`;
+            //  const slideWidth = slides[0].getBoundingClientRect().width;
+            //  ul.style.transform = `translateX(${-1 * slideWidth * currentIndex}px)`;
+            moveSlides();
      });
  }
